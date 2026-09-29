@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "kind": "capability",
+  "id": "Concurrency.CoalesceInFlight",
+  "name": "Coalesce in-flight work",
+  "definition": "Share one pending computation among concurrent requests with an equal key.",
+  "contract": {
+    "inputs": [{ "name": "key", "type": "K" }],
+    "result": "V",
+    "effect": "host"
+  },
+  "relations": []
+}

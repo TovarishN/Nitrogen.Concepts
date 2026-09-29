@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "kind": "concept",
+  "id": "Concurrency.SingleFlight",
+  "name": "SingleFlight",
+  "definition": "Concurrent requests for one key share one pending computation.",
+  "status": "candidate",
+  "inputs": [{ "name": "key", "type": "K" }],
+  "outputs": [{ "name": "value", "type": "V" }],
+  "constraints": ["The key has stable equality for the lifetime of the pending computation."],
+  "invariants": ["At most one computation for a key is in flight at a time."],
+  "applicabilityLimits": ["Cancellation and failure propagation need an explicit policy."],
+  "provides": ["Concurrency.CoalesceInFlight"],
+  "examples": [],
+  "relations": []
+}

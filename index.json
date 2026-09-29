@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "capabilities": {
+    "Concurrency.CoalesceInFlight": {
+      "concepts": [
+        "Concurrency.SingleFlight"
+      ],
+      "realizations": [],
+      "evidence": []
+    }
+  }
+}

@@ -97,6 +97,24 @@ class CatalogValidationTests(unittest.TestCase):
             self.write("concepts/concept.json", dict(CONCEPT, status="established"))
             self.assertTrue(any("maturity skip" in error for error in validate(self.root, base)))
 
+    def test_failed_reuse_remains_in_capability_index(self):
+        self.write("evidence/failure.json", {
+            "schemaVersion": 1, "kind": "evidence", "id": "EV-20260929-failure",
+            "date": "2026-09-29", "problemClass": "async cache", "domain": "software",
+            "requestedCapability": "Concurrency.CoalesceInFlight",
+            "subjectId": "Concurrency.SingleFlight", "match": "adaptation",
+            "outcome": "failed", "verification": {"status": "failed", "method": "concurrency test"},
+            "reason": "Cancellation policy did not match.", "source": "local test"
+        })
+        entry = build_index(self.root)["capabilities"]["Concurrency.CoalesceInFlight"]
+        self.assertEqual(["EV-20260929-failure"], entry["evidence"])
+
+    def test_repository_seed_is_discoverable_without_execution_claim(self):
+        repository = Path(__file__).resolve().parents[1]
+        entry = build_index(repository)["capabilities"]["Concurrency.CoalesceInFlight"]
+        self.assertEqual(["Concurrency.SingleFlight"], entry["concepts"])
+        self.assertEqual([], entry["realizations"])
+
 
 if __name__ == "__main__":
     unittest.main()
