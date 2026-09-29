@@ -109,6 +109,37 @@ class CatalogValidationTests(unittest.TestCase):
         entry = build_index(self.root)["capabilities"]["Concurrency.CoalesceInFlight"]
         self.assertEqual(["EV-20260929-failure"], entry["evidence"])
 
+    def test_relation_only_provider_is_discoverable(self):
+        concept = dict(CONCEPT, provides=[], relations=[{
+            "kind": "provides", "target": "Concurrency.CoalesceInFlight", "rationale": "supplies the capability"
+        }])
+        self.write("concepts/concept.json", concept)
+        entry = build_index(self.root)["capabilities"]["Concurrency.CoalesceInFlight"]
+        self.assertEqual(["Concurrency.SingleFlight"], entry["concepts"])
+
+    def test_requirement_is_indexed_separately_from_provider(self):
+        concept = dict(CONCEPT, provides=[], relations=[{
+            "kind": "requires", "target": "Concurrency.CoalesceInFlight", "rationale": "needs the capability"
+        }])
+        self.write("concepts/concept.json", concept)
+        entry = build_index(self.root)["capabilities"]["Concurrency.CoalesceInFlight"]
+        self.assertEqual([], entry["concepts"])
+        self.assertEqual(["Concurrency.SingleFlight"], entry["requiredBy"])
+
+    def test_malformed_evidence_returns_schema_error(self):
+        concept = dict(CONCEPT, status="established", reviewed=True,
+                       examples=[{"kind": "positive", "description": "works"},
+                                 {"kind": "negative", "description": "fails"}])
+        self.write("concepts/concept.json", concept)
+        self.write("evidence/invalid.json", {
+            "schemaVersion": 1, "kind": "evidence", "id": "EV-20260929-invalid",
+            "date": "2026-09-29", "problemClass": "independent use", "domain": "software",
+            "requestedCapability": "Concurrency.CoalesceInFlight",
+            "subjectId": "Concurrency.SingleFlight", "match": "exact", "outcome": "accepted",
+            "verification": None, "reason": "malformed", "source": "local test", "independent": True
+        })
+        self.assertTrue(any("schema" in error for error in validate(self.root)))
+
     def test_repository_seed_is_discoverable_without_execution_claim(self):
         repository = Path(__file__).resolve().parents[1]
         entry = build_index(repository)["capabilities"]["Concurrency.CoalesceInFlight"]

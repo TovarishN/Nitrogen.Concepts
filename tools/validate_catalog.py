@@ -35,11 +35,17 @@ def build_index(root: Path) -> dict:
     capabilities = {}
     for _, record in records:
         if record.get("kind") == "capability":
-            capabilities[record["id"]] = {"concepts": [], "realizations": [], "evidence": []}
+            capabilities[record["id"]] = {"concepts": [], "realizations": [], "requiredBy": [], "evidence": []}
     for _, record in records:
         kind = record.get("kind")
         if kind in ("concept", "realization"):
-            for capability_id in record.get("provides", []):
+            provided = set(record.get("provides", []))
+            for relation in record.get("relations", []):
+                if relation.get("kind") == "provides":
+                    provided.add(relation["target"])
+                elif relation.get("kind") == "requires" and relation["target"] in capabilities:
+                    capabilities[relation["target"]]["requiredBy"].append(record["id"])
+            for capability_id in provided:
                 if capability_id in capabilities:
                     capabilities[capability_id][kind + "s"].append(record["id"])
         elif kind == "evidence":
@@ -48,7 +54,7 @@ def build_index(root: Path) -> dict:
                 capabilities[capability_id]["evidence"].append(record["id"])
     for entry in capabilities.values():
         for values in entry.values():
-            values.sort()
+            values[:] = sorted(set(values))
     return {"schemaVersion": 1, "capabilities": dict(sorted(capabilities.items()))}
 
 
@@ -84,6 +90,8 @@ def validate(root: Path, base_root: Path = None) -> list[str]:
         for relation in record.get("relations", []):
             if isinstance(relation, dict) and relation.get("target") not in by_id:
                 errors.append(f"{path}: missing relation target {relation.get('target')}")
+            elif isinstance(relation, dict) and relation.get("kind") in ("provides", "requires") and by_id[relation["target"]][1].get("kind") != "capability":
+                errors.append(f"{path}: {relation['kind']} relation must target a capability")
         for target in record.get("provides", []):
             if target not in by_id or by_id[target][1].get("kind") != "capability":
                 errors.append(f"{path}: missing capability {target}")
@@ -98,7 +106,7 @@ def validate(root: Path, base_root: Path = None) -> list[str]:
             if subject is not None and subject not in by_id:
                 errors.append(f"{path}: missing evidence subject {subject}")
 
-    evidence = [record for _, record in records if isinstance(record, dict) and record.get("kind") == "evidence"]
+    evidence = [record for path, record in records if path in valid_paths and record.get("kind") == "evidence"]
     for path, record in records:
         if path not in valid_paths or record.get("kind") != "concept" or record.get("status") != "established":
             continue

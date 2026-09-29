@@ -4,7 +4,7 @@ This private repository records semantic knowledge learned while solving tasks. 
 
 ## Read the catalog
 
-Use `index.json` to find a capability, then open its concept, realization, and evidence records. The index is generated from records and lists failed evidence alongside successes. Search by capability first, inspect constraints and counterexamples, then confirm any realization's exact contract, revision, host requirements, and current validation state.
+Use `index.json` to find a capability, then open its concept, realization, and evidence records. The index is generated from both top-level `provides` fields and `provides` relations. Its `requiredBy` list names concepts or realizations that depend on the capability; those are not providers. Failed evidence remains listed alongside successes. Search by capability first, inspect constraints and counterexamples, then confirm any realization's exact contract, revision, host requirements, and current validation state.
 
 ```sh
 git clone git@github.com:TovarishN/Nitrogen.Concepts.git
