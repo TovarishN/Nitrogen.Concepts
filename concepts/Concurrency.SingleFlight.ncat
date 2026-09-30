@@ -1,0 +1,11 @@
+concept Concurrency.SingleFlight candidate
+{
+  name "SingleFlight";
+  definition "Concurrent requests for one key share one pending computation.";
+  inputs (key: K);
+  outputs (value: V);
+  constraint "The key has stable equality for the lifetime of the pending computation.";
+  invariant "At most one computation for a key is in flight at a time.";
+  limit "Cancellation and failure propagation need an explicit policy.";
+  provides Concurrency.CoalesceInFlight;
+}

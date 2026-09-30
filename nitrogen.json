@@ -1,0 +1,12 @@
+{
+  "languages": [
+    {
+      "name": "catalog",
+      "extensions": [".ncat"],
+      "start": "Catalog.Record",
+      "grammars": ["language/Catalog.ngr"],
+      "sources": ["language/CatalogChecks.cs"],
+      "usings": ["NitrogenCatalog"]
+    }
+  ]
+}
