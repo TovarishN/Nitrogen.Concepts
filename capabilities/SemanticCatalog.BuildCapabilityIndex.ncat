@@ -1,0 +1,6 @@
+capability SemanticCatalog.BuildCapabilityIndex
+{
+  name "Build the capability index";
+  definition "Generate the capability-first index that lists, per capability, its providing concepts and realizations, the records that require it, and the evidence that requested it.";
+  contract (catalog: CatalogCheckout) -> CapabilityIndex effect host;
+}

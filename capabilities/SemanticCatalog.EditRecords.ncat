@@ -1,0 +1,6 @@
+capability SemanticCatalog.EditRecords
+{
+  name "Edit catalog records";
+  definition "Serve parse and binding diagnostics, go to definition, references, and rename for catalog records in an editor.";
+  contract (record: CatalogRecord) -> EditorFeedback effect host;
+}
