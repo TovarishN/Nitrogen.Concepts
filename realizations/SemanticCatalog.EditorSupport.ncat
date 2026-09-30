@@ -6,6 +6,6 @@ realization SemanticCatalog.EditorSupport composition
   revision "615f685ca7de4ef9ccdc99894707d0c8636c2ec7";
   runtime ".NET 10 runtime with Nitrogen 22d96e6394a95a6ce83d2e421f98b8a23b35cc7d; VS Code 1.90+ or Rider 2026.2";
   host "an editor that runs a language server over stdio";
-  validation unverified;
+  validation locally-validated;
   provides SemanticCatalog.EditRecords;
 }
