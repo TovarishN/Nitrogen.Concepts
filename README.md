@@ -45,12 +45,14 @@ The validator reports Nitrogen parse diagnostics (`Expected`, …), binding diag
 
 ## Editor support
 
-`tools/editors/build.sh` builds editor support from the pinned Nitrogen submodule into `artifacts/`. Both editors run `nitrogen lsp`, which reads `nitrogen.json` and serves parse and binding diagnostics, go to definition, references, and rename for `.ncat` records. The clause checks (`CA0001`–`CA0005`) and catalog rules appear only from the command line and CI.
+`tools/editors/build.sh` runs the pinned Nitrogen's `nitrogen package` and writes installable plugins to `artifacts/`:
 
-- **VS Code:** run `tools/editors/build.sh --vscode`, then install `artifacts/nitrogen-0.1.0.vsix` (Extensions → … → Install from VSIX). `.vscode/settings.json` points the extension at `tools/editors/nitrogen`, which runs the server built in `artifacts/nitrogen/`.
-- **Rider:** run `tools/editors/build.sh --rider` with Gradle and JDK 25 (`JAVA_HOME`), then install `artifacts/catalog-rider.zip` (Settings → Plugins → ⚙ → Install Plugin from Disk). The plugin registers `.ncat` and bundles a server for the machine that built it.
+- **VS Code:** `artifacts/catalog-0.1.0.vsix`; install it with **Extensions: Install from VSIX...**.
+- **Rider:** `artifacts/catalog-0.1.0-rider.zip`; install it with **Settings → Plugins → ⚙ → Install Plugin from Disk**.
 
-The Rider generator needs the submodule checked out with LF line endings; the script stops with the fix if `core.autocrlf` or `core.eol=crlf` produced CRLF.
+Pass `--vscode` or `--rider` to build one. Building needs the .NET 10 SDK, npm for VS Code, and Gradle with JDK 25 (`JAVA_HOME`) for Rider.
+
+Each plugin carries the catalog language and a portable Nitrogen server, so `.ncat` files get diagnostics (parse, binding, and the `CA0001`–`CA0005` clause checks), go to definition, references, and rename in any folder. The server runs on the .NET 10 runtime (`dotnet`). The catalog-wide and history rules (`CA01xx`, `CA02xx`) still appear only from the command line and CI.
 
 ## Propose a catalog change
 
