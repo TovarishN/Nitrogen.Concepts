@@ -1,0 +1,6 @@
+capability SemanticCatalog.ValidateRecords
+{
+  name "Validate catalog records";
+  definition "Parse, bind, and check every record in a catalog checkout and report each problem as a source-located diagnostic.";
+  contract (catalog: CatalogCheckout) -> Diagnostics effect host;
+}

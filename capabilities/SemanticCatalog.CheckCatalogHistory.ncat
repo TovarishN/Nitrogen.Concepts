@@ -1,0 +1,7 @@
+capability SemanticCatalog.CheckCatalogHistory
+{
+  name "Check catalog history";
+  definition "Compare a catalog with its base revision and reject concept maturity that skips a level or goes down, and evidence that changed or disappeared.";
+  contract (catalog: CatalogCheckout, base: CatalogCheckout) -> Diagnostics effect host;
+  relation composes-with SemanticCatalog.ValidateRecords "Pull-request validation runs both; history rules assume each revision's records are valid.";
+}

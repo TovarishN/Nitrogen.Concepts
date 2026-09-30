@@ -8,6 +8,38 @@
       "realizations": [],
       "requiredBy": [],
       "evidence": []
+    },
+    "SemanticCatalog.BuildCapabilityIndex": {
+      "concepts": [],
+      "realizations": [
+        "SemanticCatalog.CatalogTool"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "SemanticCatalog.CheckCatalogHistory": {
+      "concepts": [],
+      "realizations": [
+        "SemanticCatalog.CatalogTool"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "SemanticCatalog.EditRecords": {
+      "concepts": [],
+      "realizations": [
+        "SemanticCatalog.EditorSupport"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "SemanticCatalog.ValidateRecords": {
+      "concepts": [],
+      "realizations": [
+        "SemanticCatalog.CatalogTool"
+      ],
+      "requiredBy": [],
+      "evidence": []
     }
   }
 }
