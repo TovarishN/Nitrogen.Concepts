@@ -1,1 +1,1 @@
-return 0;
+return NitrogenCatalog.CatalogCli.Run(args, Console.Out);
