@@ -2,9 +2,9 @@ realization Nitrogen.LanguageServer implementation
 {
   name "Nitrogen language server";
   definition "Nitrogen.LanguageService served by nitrogen lsp, optionally pinned to a bundled config with --config. It binds closed workspace files of nitrogen.json languages and publishes diagnostics for open ones.";
-  source "https://github.com/TovarishN/Nitrogen/tree/2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  revision "2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  runtime ".NET 10";
+  source "https://github.com/TovarishN/Nitrogen/tree/53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  revision "53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  runtime ".NET 10; the nitrogen tool 0.1.0 (nitrogen lsp)";
   host "an editor that runs a language server over stdio";
   validation locally-validated;
   provides LanguageWorkbench.ServeLanguage;
