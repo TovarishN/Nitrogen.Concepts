@@ -2,9 +2,9 @@ realization SemanticCatalog.CatalogTool implementation
 {
   name "Catalog validator and indexer";
   definition "The tools/Catalog command-line tool: loads .ncat records written in language/Catalog.ngr into one Nitrogen project, applies catalog-wide and base-revision rules, and writes or checks index.json.";
-  source "https://github.com/TovarishN/Nitrogen.Concepts/tree/615f685ca7de4ef9ccdc99894707d0c8636c2ec7/tools/Catalog";
-  revision "615f685ca7de4ef9ccdc99894707d0c8636c2ec7";
-  runtime ".NET 10 with Nitrogen 22d96e6394a95a6ce83d2e421f98b8a23b35cc7d (submodule external/Nitrogen)";
+  source "https://github.com/TovarishN/Nitrogen.Concepts/tree/f20dd5452977d957a19b4933dfa18c542f981fb0/tools/Catalog";
+  revision "f20dd5452977d957a19b4933dfa18c542f981fb0";
+  runtime ".NET 10 with Nitrogen 2c7780681db0367d6e65dbb652c0a66f389c02ec (submodule external/Nitrogen)";
   host "read access to a catalog checkout";
   host "write access to index.json (index --write only)";
   validation locally-validated;
