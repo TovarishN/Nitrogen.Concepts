@@ -94,7 +94,7 @@ Checks are split by what they need to see.
 | --- | --- |
 | `CA0001` | A required clause is missing (per record kind, matching today's schema). |
 | `CA0002` | A single-valued clause is repeated. |
-| `CA0003` | A realization provides no capability. |
+| `CA0003` | A realization has no `provides` clause. |
 | `CA0004` | A string field is empty. |
 | `CA0005` | A duplicate entry in `provides`, `supersedes`, or `host`. |
 
@@ -105,7 +105,7 @@ Checks are split by what they need to see.
 | `CA0100` | A record's kind does not match its directory. |
 | `CA0101` | A file under a record directory is a symbolic link or has another extension. |
 | `CA0102` | `date` is not a real calendar date. |
-| `CA0103` | An established concept lacks `reviewed`, a positive and a negative example, or accepted, independent, passed evidence with it as `subject`. Found with `Project.ReferencesTo`. |
+| `CA0103` | An established concept lacks `reviewed`, a positive and a negative example, or accepted, independent, passed evidence with it as `subject`, found in the catalog model. |
 | `CA0104` | `index.json` is stale. |
 | `CA0200` | (`--base`) A concept's maturity skips a level or goes down. |
 | `CA0201` | (`--base`) A base evidence record changed or disappeared. |
