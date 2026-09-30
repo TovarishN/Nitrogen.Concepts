@@ -19,25 +19,60 @@ syntax module Catalog
   syntax Record = Concept / Capability / Realization / Evidence;
 
   syntax Concept = "concept" Id:RecordId Status:("observation" / "candidate" / "established") "{" Clauses:ConceptClause* "}"
-    declares concept Id export;
+    declares concept Id export
+  {
+    check CA0001 CatalogChecks.Missing(Clauses, CatalogChecks.ConceptRequired) is null
+      : $"concept is missing '{CatalogChecks.Missing(Clauses, CatalogChecks.ConceptRequired)}'" at Id;
+    check CA0002 CatalogChecks.Repeated(Clauses, CatalogChecks.ConceptSingle) is null
+      : $"'{CatalogChecks.Repeated(Clauses, CatalogChecks.ConceptSingle)}' appears more than once" at Id;
+    check CA0005 CatalogChecks.Duplicate(Clauses) is null
+      : $"duplicate '{CatalogChecks.Duplicate(Clauses)}'" at Id;
+  }
   syntax ConceptClause = NameClause / DefinitionClause / InputsClause / OutputsClause / ConstraintClause / InvariantClause
     / LimitClause / ProvidesClause / ExampleClause / ReviewedClause / CapabilityRelation / RecordRelation / SupersedesClause;
 
   syntax Capability = "capability" Id:RecordId "{" Clauses:CapabilityClause* "}"
-    declares capability Id export;
+    declares capability Id export
+  {
+    check CA0001 CatalogChecks.Missing(Clauses, CatalogChecks.CapabilityRequired) is null
+      : $"capability is missing '{CatalogChecks.Missing(Clauses, CatalogChecks.CapabilityRequired)}'" at Id;
+    check CA0002 CatalogChecks.Repeated(Clauses, CatalogChecks.CapabilityRequired) is null
+      : $"'{CatalogChecks.Repeated(Clauses, CatalogChecks.CapabilityRequired)}' appears more than once" at Id;
+    check CA0005 CatalogChecks.Duplicate(Clauses) is null
+      : $"duplicate '{CatalogChecks.Duplicate(Clauses)}'" at Id;
+  }
   syntax CapabilityClause = NameClause / DefinitionClause / ContractClause / CapabilityRelation / RecordRelation / SupersedesClause;
 
   syntax Realization = "realization" Id:RecordId Form:("nitrogen-module" / "implementation" / "api" / "composition") "{" Clauses:RealizationClause* "}"
-    declares realization Id export;
+    declares realization Id export
+  {
+    check CA0001 CatalogChecks.Missing(Clauses, CatalogChecks.RealizationRequired) is null
+      : $"realization is missing '{CatalogChecks.Missing(Clauses, CatalogChecks.RealizationRequired)}'" at Id;
+    check CA0002 CatalogChecks.Repeated(Clauses, CatalogChecks.RealizationRequired) is null
+      : $"'{CatalogChecks.Repeated(Clauses, CatalogChecks.RealizationRequired)}' appears more than once" at Id;
+    check CA0003 CatalogChecks.Count(Clauses, CatalogChecks.ProvidesKeyword) > 0
+      : "realization must provide at least one capability" at Id;
+    check CA0005 CatalogChecks.Duplicate(Clauses) is null
+      : $"duplicate '{CatalogChecks.Duplicate(Clauses)}'" at Id;
+  }
   syntax RealizationClause = NameClause / DefinitionClause / SourceClause / RevisionClause / RuntimeClause / HostClause
     / ValidationClause / ProvidesClause / CapabilityRelation / RecordRelation / SupersedesClause;
 
   syntax Evidence = "evidence" Id:EventId "{" Clauses:EvidenceClause* "}"
-    declares evidence Id export;
+    declares evidence Id export
+  {
+    check CA0001 CatalogChecks.Missing(Clauses, CatalogChecks.EvidenceRequired) is null
+      : $"evidence is missing '{CatalogChecks.Missing(Clauses, CatalogChecks.EvidenceRequired)}'" at Id;
+    check CA0002 CatalogChecks.Repeated(Clauses, CatalogChecks.EvidenceSingle) is null
+      : $"'{CatalogChecks.Repeated(Clauses, CatalogChecks.EvidenceSingle)}' appears more than once" at Id;
+  }
   syntax EvidenceClause = DateClause / ProblemClause / DomainClause / RequestsClause / SubjectClause / MatchClause / OutcomeClause
     / VerificationClause / ExecutionClause / AdaptationClause / ReasonClause / SourceClause / IndependentClause;
 
-  syntax Str              = Value:String;
+  syntax Str = Value:String
+  {
+    check CA0004 Value.Text.Length > 2 : "text must not be empty";
+  }
   syntax Param            = Name:Identifier ":" Type:TypeName;
 
   syntax NameClause       = "name" Value:Str ";";
