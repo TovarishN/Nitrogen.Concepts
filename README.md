@@ -7,12 +7,18 @@ This private repository records semantic knowledge learned while solving tasks. 
 Use `index.json` to find a capability, then open its concept, realization, and evidence records (`.ncat` files). The index is generated from both top-level `provides` fields and `provides` relations. Its `requiredBy` list names concepts or realizations that depend on the capability; those are not providers. Failed evidence remains listed alongside successes. Search by capability first, inspect constraints and counterexamples, then confirm any realization's exact contract, revision, host requirements, and current validation state.
 
 ```sh
-git clone --recurse-submodules git@github.com:TovarishN/Nitrogen.Concepts.git
+git clone git@github.com:TovarishN/Nitrogen.Concepts.git
 cd Nitrogen.Concepts
 dotnet run --project tools/Catalog -- validate
 ```
 
-The validator needs the .NET 10 SDK and the pinned Nitrogen checkout in `external/Nitrogen`.
+The validator needs the .NET 10 SDK and read access to Nitrogen's packages on GitHub Packages (see `nuget.config`). NuGet reads the credentials from an environment variable; use a classic GitHub token with `read:packages`, or `gh auth token` after `gh auth refresh -s read:packages`:
+
+```sh
+export NuGetPackageSourceCredentials_nitrogen="Username=<github user>;Password=<token>"
+```
+
+`Directory.Build.props` pins the Nitrogen version the tool builds against.
 
 Set `NITROGEN_CONCEPT_CATALOG` to the absolute checkout path when using the cross-project Nitrogen skill. Without this setting, the skill may search a known sibling checkout or fetch through the user's configured GitHub access. Do not infer that a missing or inaccessible catalog is empty.
 
@@ -45,7 +51,7 @@ The validator reports Nitrogen parse diagnostics (`Expected`, …), binding diag
 
 ## Editor support
 
-`tools/editors/build.sh` runs the pinned Nitrogen's `nitrogen package` and writes installable plugins to `artifacts/`:
+`tools/editors/build.sh` runs `nitrogen package` from the `nitrogen` tool pinned in `.config/dotnet-tools.json` and writes installable plugins to `artifacts/`:
 
 - **VS Code:** `artifacts/catalog-0.1.0.vsix`; install it with **Extensions: Install from VSIX...**.
 - **Rider:** `artifacts/catalog-0.1.0-rider.zip`; install it with **Settings → Plugins → ⚙ → Install Plugin from Disk**.

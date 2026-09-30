@@ -4,19 +4,18 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   catalog:
     runs-on: ubuntu-latest
+    env:
+      # Nitrogen's packages on GitHub Packages (nuget.config); each package grants this repository read access.
+      NuGetPackageSourceCredentials_nitrogen: Username=${{ github.actor }};Password=${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v7
-      - name: Fetch Nitrogen submodule
-        env:
-          NITROGEN_DEPLOY_KEY: ${{ secrets.NITROGEN_DEPLOY_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$NITROGEN_DEPLOY_KEY" > ~/.ssh/nitrogen
-          chmod 600 ~/.ssh/nitrogen
-          GIT_SSH_COMMAND="ssh -i ~/.ssh/nitrogen -o StrictHostKeyChecking=accept-new" git submodule update --init
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.0.x

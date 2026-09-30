@@ -1,0 +1,6 @@
+<Project>
+  <!-- The Nitrogen release the catalog builds against; .config/dotnet-tools.json pins the same version of the tool. -->
+  <PropertyGroup>
+    <NitrogenVersion>0.1.0</NitrogenVersion>
+  </PropertyGroup>
+</Project>

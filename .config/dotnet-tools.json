@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "nitrogen.cli": {
+      "version": "0.1.0",
+      "commands": ["nitrogen"],
+      "rollForward": false
+    }
+  }
+}

@@ -17,6 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Catalog\Catalog.csproj" />
-    <ProjectReference Include="..\..\external\Nitrogen\Nitrogen.Runtime\Nitrogen.Runtime.csproj" />
+    <PackageReference Include="Nitrogen.Runtime" Version="$(NitrogenVersion)" />
   </ItemGroup>
 </Project>
