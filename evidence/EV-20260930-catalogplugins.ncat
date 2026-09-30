@@ -1,0 +1,13 @@
+evidence EV-20260930-catalogplugins
+{
+  date 2026-09-30;
+  problem "install catalog editor support in VS Code and Rider";
+  domain "semantic catalog";
+  requests LanguageWorkbench.PackageEditorPlugins;
+  subject Nitrogen.PluginPackager;
+  match exact;
+  outcome accepted;
+  verification passed "nitrogen package built catalog-0.1.0.vsix and catalog-0.1.0-rider.zip; each bundled server answered over LSP from an empty folder";
+  reason "One command replaced the catalog's own editor build steps and runs in any folder.";
+  source "TovarishN/Nitrogen#5; TovarishN/Nitrogen.Concepts#3";
+}

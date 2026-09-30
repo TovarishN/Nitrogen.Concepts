@@ -1,0 +1,6 @@
+capability LanguageWorkbench.LowerToTypedHir
+{
+  name "Lower to typed HIR";
+  definition "Lower a checked file to typed HIR operations, constants, and symbol references against a composed semantic catalog, keeping source origins.";
+  contract (file: CheckedFile, catalog: SemanticCatalog) -> TypedHir effect pure;
+}

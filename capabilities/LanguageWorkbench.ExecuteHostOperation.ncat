@@ -1,0 +1,6 @@
+capability LanguageWorkbench.ExecuteHostOperation
+{
+  name "Execute host operations";
+  definition "Bind typed HIR operations to exact host operation signatures and evaluate them with explicit inputs, returning origin-bearing results or diagnostics.";
+  contract (program: TypedHir, bindings: HostBindings) -> Value effect host;
+}
