@@ -41,7 +41,16 @@ concept Concurrency.SingleFlight candidate
 }
 ```
 
-The validator reports Nitrogen parse diagnostics (`Expected`, …), binding diagnostics (`NB0001` for an unresolved or wrong-kind target, `NB0003` for a duplicate ID), and catalog diagnostics (`CA0001`–`CA0201`), each as `path:line:col: CODE message`. With the Nitrogen VS Code extension, `nitrogen.json` gives parse and binding diagnostics, go to definition, and rename in the editor. The clause checks (`CA0001`–`CA0005`) and catalog rules appear only from the command line and CI.
+The validator reports Nitrogen parse diagnostics (`Expected`, …), binding diagnostics (`NB0001` for an unresolved or wrong-kind target, `NB0003` for a duplicate ID), and catalog diagnostics (`CA0001`–`CA0201`), each as `path:line:col: CODE message`.
+
+## Editor support
+
+`tools/editors/build.sh` builds editor support from the pinned Nitrogen submodule into `artifacts/`. Both editors run `nitrogen lsp`, which reads `nitrogen.json` and serves parse and binding diagnostics, go to definition, references, and rename for `.ncat` records. The clause checks (`CA0001`–`CA0005`) and catalog rules appear only from the command line and CI.
+
+- **VS Code:** run `tools/editors/build.sh --vscode`, then install `artifacts/nitrogen-0.1.0.vsix` (Extensions → … → Install from VSIX). `.vscode/settings.json` points the extension at `tools/editors/nitrogen`, which runs the server built in `artifacts/nitrogen/`.
+- **Rider:** run `tools/editors/build.sh --rider` with Gradle and JDK 25 (`JAVA_HOME`), then install `artifacts/catalog-rider.zip` (Settings → Plugins → ⚙ → Install Plugin from Disk). The plugin registers `.ncat` and bundles a server for the machine that built it.
+
+The Rider generator needs the submodule checked out with LF line endings; the script stops with the fix if `core.autocrlf` or `core.eol=crlf` produced CRLF.
 
 ## Propose a catalog change
 
