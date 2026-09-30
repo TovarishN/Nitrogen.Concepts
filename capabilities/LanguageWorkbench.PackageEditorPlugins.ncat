@@ -1,0 +1,6 @@
+capability LanguageWorkbench.PackageEditorPlugins
+{
+  name "Package editor plugins";
+  definition "Build installable VS Code and Rider plugins for a nitrogen.json language that carry its grammar, helper sources, and a portable language server run with the .NET runtime.";
+  contract (config: NitrogenConfig) -> EditorPlugins effect host;
+}

@@ -1,0 +1,13 @@
+realization Nitrogen.PluginPackager implementation
+{
+  name "Nitrogen plugin packager";
+  definition "nitrogen package in Nitrogen.Cli: stages a language bundle and builds a .vsix with npm and vsce and a Rider plugin ZIP with Gradle. The plugins run the bundled server with the user's .NET 10 runtime.";
+  source "https://github.com/TovarishN/Nitrogen/tree/2c7780681db0367d6e65dbb652c0a66f389c02ec";
+  revision "2c7780681db0367d6e65dbb652c0a66f389c02ec";
+  runtime ".NET 10";
+  host "npm for VS Code packages";
+  host "Gradle and JDK 25 for Rider packages";
+  validation locally-validated;
+  provides LanguageWorkbench.PackageEditorPlugins;
+  relation requires LanguageWorkbench.ServeLanguage "Each plugin runs nitrogen lsp --config on its bundled language.";
+}

@@ -11,4 +11,7 @@ realization SemanticCatalog.CatalogTool implementation
   provides SemanticCatalog.ValidateRecords;
   provides SemanticCatalog.BuildCapabilityIndex;
   provides SemanticCatalog.CheckCatalogHistory;
+  relation requires LanguageWorkbench.ParseWithGrammar "Records are parsed with language/Catalog.ngr through the Nitrogen generator.";
+  relation requires LanguageWorkbench.BindNames "Cross-record IDs are resolved by Nitrogen binding (NB0001, NB0003).";
+  relation requires LanguageWorkbench.CheckSemantics "Clause checks CA0001-CA0005 are grammar checks evaluated by ProjectSemantics.";
 }

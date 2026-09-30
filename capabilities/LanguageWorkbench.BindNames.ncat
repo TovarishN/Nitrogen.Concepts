@@ -1,0 +1,6 @@
+capability LanguageWorkbench.BindNames
+{
+  name "Bind names across files";
+  definition "Resolve the declarations and references a grammar declares across the files of a project, reporting unresolved, wrong-kind, and duplicate exported names.";
+  contract (files: SyntaxTrees) -> Bindings effect pure;
+}

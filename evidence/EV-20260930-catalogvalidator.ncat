@@ -1,0 +1,14 @@
+evidence EV-20260930-catalogvalidator
+{
+  date 2026-09-30;
+  problem "validate typed catalog records and their cross-record references";
+  domain "semantic catalog";
+  requests SemanticCatalog.ValidateRecords;
+  subject Nitrogen.LanguageCore;
+  match composition;
+  outcome accepted;
+  verification passed "51 catalog tests; validate on the migrated catalog; regenerated index.json byte-identical";
+  adaptation "Clause-check helpers take the SemanticList clause lists that grammar checks see, not SyntaxList.";
+  reason "Nitrogen parsing, binding, and grammar checks covered record shape and cross-record IDs; catalog-wide and history rules stayed in host code.";
+  source "TovarishN/Nitrogen.Concepts#1";
+}

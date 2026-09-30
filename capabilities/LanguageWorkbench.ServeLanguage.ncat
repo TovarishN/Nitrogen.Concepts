@@ -1,0 +1,6 @@
+capability LanguageWorkbench.ServeLanguage
+{
+  name "Serve a language to editors";
+  definition "Serve a nitrogen.json language over LSP: diagnostics, semantic tokens, outline, hover, completion, go to definition, references, and rename, binding the workspace's closed files as well as open ones.";
+  contract (config: NitrogenConfig) -> LanguageServer effect host;
+}

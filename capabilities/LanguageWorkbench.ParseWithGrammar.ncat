@@ -1,0 +1,6 @@
+capability LanguageWorkbench.ParseWithGrammar
+{
+  name "Parse with a grammar";
+  definition "Generate a parser and typed syntax views from a .ngr grammar, and parse text into a syntax tree, recovering from errors with source-located diagnostics.";
+  contract (grammar: NgrGrammar, text: SourceText) -> SyntaxTree effect pure;
+}

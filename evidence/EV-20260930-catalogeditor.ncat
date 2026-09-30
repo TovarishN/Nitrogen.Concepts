@@ -1,0 +1,14 @@
+evidence EV-20260930-catalogeditor
+{
+  date 2026-09-30;
+  problem "edit catalog records with diagnostics and navigation";
+  domain "semantic catalog";
+  requests SemanticCatalog.EditRecords;
+  subject Nitrogen.LanguageServer;
+  match composition;
+  outcome modified;
+  verification passed "LSP sessions against both packaged servers with only one record open: no diagnostics, and definition reaches the closed record";
+  adaptation "Needed two Nitrogen fixes: grammar checks without semantic properties shown in the editor (Nitrogen#4), and closed workspace files bound (Nitrogen#6).";
+  reason "Before the fixes the editor skipped clause checks and reported unresolved references that validate accepted.";
+  source "TovarishN/Nitrogen#4; TovarishN/Nitrogen#6; TovarishN/Nitrogen.Concepts#4";
+}
