@@ -1,0 +1,78 @@
+// The Nitrogen semantic catalog: one record per file.
+// Design: docs/superpowers/specs/2026-09-30-catalog-language-design.md
+syntax module Catalog
+{
+  symbols { concept capability realization evidence }
+
+  token Upper      = ['A'..'Z'];
+  token Digit      = ['0'..'9'];
+  token IdPart     = ['a'..'z' 'A'..'Z' '0'..'9'];
+  token RecordId   = Upper IdPart* ("." Upper IdPart*)+;
+  token EventId    = "EV-" Digit Digit Digit Digit Digit Digit Digit Digit "-" ['a'..'z' '0'..'9']+;
+  token Date       = Digit Digit Digit Digit "-" Digit Digit "-" Digit Digit;
+  token Identifier = ['a'..'z' 'A'..'Z' '_'] ['a'..'z' 'A'..'Z' '0'..'9' '_']*;
+  token TypeName   = ['a'..'z' 'A'..'Z' '_'] ['a'..'z' 'A'..'Z' '0'..'9' '_' '.']*;
+  token Hex        = ['0'..'9' 'a'..'f' 'A'..'F'];
+  token Escape     = "\\" (['n' 'r' 't' '0' '\\' '"' '\''] / "u" Hex Hex Hex Hex);
+  token String     = "\"" (Escape / [^ '"' '\\' '\n'])* "\"";
+
+  syntax Record = Concept / Capability / Realization / Evidence;
+
+  syntax Concept = "concept" Id:RecordId Status:("observation" / "candidate" / "established") "{" Clauses:ConceptClause* "}"
+    declares concept Id export;
+  syntax ConceptClause = NameClause / DefinitionClause / InputsClause / OutputsClause / ConstraintClause / InvariantClause
+    / LimitClause / ProvidesClause / ExampleClause / ReviewedClause / CapabilityRelation / RecordRelation / SupersedesClause;
+
+  syntax Capability = "capability" Id:RecordId "{" Clauses:CapabilityClause* "}"
+    declares capability Id export;
+  syntax CapabilityClause = NameClause / DefinitionClause / ContractClause / CapabilityRelation / RecordRelation / SupersedesClause;
+
+  syntax Realization = "realization" Id:RecordId Form:("nitrogen-module" / "implementation" / "api" / "composition") "{" Clauses:RealizationClause* "}"
+    declares realization Id export;
+  syntax RealizationClause = NameClause / DefinitionClause / SourceClause / RevisionClause / RuntimeClause / HostClause
+    / ValidationClause / ProvidesClause / CapabilityRelation / RecordRelation / SupersedesClause;
+
+  syntax Evidence = "evidence" Id:EventId "{" Clauses:EvidenceClause* "}"
+    declares evidence Id export;
+  syntax EvidenceClause = DateClause / ProblemClause / DomainClause / RequestsClause / SubjectClause / MatchClause / OutcomeClause
+    / VerificationClause / ExecutionClause / AdaptationClause / ReasonClause / SourceClause / IndependentClause;
+
+  syntax Str              = Value:String;
+  syntax Param            = Name:Identifier ":" Type:TypeName;
+
+  syntax NameClause       = "name" Value:Str ";";
+  syntax DefinitionClause = "definition" Value:Str ";";
+  syntax InputsClause     = "inputs" "(" Items:(Param; ",")* ")" ";";
+  syntax OutputsClause    = "outputs" "(" Items:(Param; ",")* ")" ";";
+  syntax ContractClause   = "contract" "(" Inputs:(Param; ",")* ")" "->" Result:TypeName "effect" Effect:("pure" / "host") ";";
+  syntax ConstraintClause = "constraint" Value:Str ";";
+  syntax InvariantClause  = "invariant" Value:Str ";";
+  syntax LimitClause      = "limit" Value:Str ";";
+  syntax ExampleClause    = "example" Polarity:("positive" / "negative") Value:Str ";";
+  syntax ReviewedClause   = "reviewed" ";";
+  syntax ProvidesClause   = "provides" Target:RecordId ";" references capability Target;
+  syntax SupersedesClause = "supersedes" Target:RecordId ";" references (concept | capability | realization) Target;
+  syntax CapabilityRelation = "relation" Relation:("provides" / "requires") Target:RecordId Rationale:Str ";"
+    references capability Target;
+  syntax RecordRelation   = "relation" Relation:("specializes" / "generalizes" / "composes-with" / "conflicts-with" / "derived-from" / "alternative-to")
+    Target:RecordId Rationale:Str ";" references (concept | capability | realization) Target;
+
+  syntax SourceClause     = "source" Value:Str ";";
+  syntax RevisionClause   = "revision" Value:Str ";";
+  syntax RuntimeClause    = "runtime" Value:Str ";";
+  syntax HostClause       = "host" Value:Str ";";
+  syntax ValidationClause = "validation" Value:("unverified" / "locally-validated" / "readmitted") ";";
+
+  syntax DateClause         = "date" Value:Date ";";
+  syntax ProblemClause      = "problem" Value:Str ";";
+  syntax DomainClause       = "domain" Value:Str ";";
+  syntax RequestsClause     = "requests" Target:RecordId ";" references capability Target;
+  syntax SubjectClause      = "subject" Target:RecordId ";" references (concept | capability | realization) Target;
+  syntax MatchClause        = "match" Value:("exact" / "specialization" / "adaptation" / "composition" / "none") ";";
+  syntax OutcomeClause      = "outcome" Value:("accepted" / "rejected" / "modified" / "failed" / "observed") ";";
+  syntax VerificationClause = "verification" Status:("passed" / "failed" / "not-run") Method:Str ";";
+  syntax ExecutionClause    = "execution" Value:("passed" / "failed" / "not-run") ";";
+  syntax AdaptationClause   = "adaptation" Value:Str ";";
+  syntax ReasonClause       = "reason" Value:Str ";";
+  syntax IndependentClause  = "independent" ";";
+}
