@@ -1,6 +1,3 @@
-.venv/
-__pycache__/
-*.pyc
-.catalog-base/
 bin/
 obj/
+.catalog-base/
