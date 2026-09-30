@@ -2,9 +2,9 @@ realization Nitrogen.ModuleAdmission implementation
 {
   name "Nitrogen module admission";
   definition "Nitrogen.Workspace admission: ModuleAdmissionService compiles a reviewed local .ngr package, checks its examples, and exposes only the exact bindings a HostCapabilitySet grants. It is a trusted local gate for pure capabilities, not a sandbox for untrusted code.";
-  source "https://github.com/TovarishN/Nitrogen/tree/2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  revision "2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  runtime ".NET 10";
+  source "https://github.com/TovarishN/Nitrogen/tree/53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  revision "53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  runtime ".NET 10; Nitrogen v0.1.0 source (Nitrogen.Workspace is not published as a package)";
   host "a human-reviewed local module package";
   host "a host-owned capability set";
   validation locally-validated;

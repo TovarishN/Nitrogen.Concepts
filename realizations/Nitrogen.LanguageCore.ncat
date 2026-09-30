@@ -2,9 +2,9 @@ realization Nitrogen.LanguageCore implementation
 {
   name "Nitrogen language core";
   definition "Nitrogen.Grammar, Nitrogen.Generator, and Nitrogen.Runtime: .ngr grammars compiled to parsers and typed views, Project binding, ProjectSemantics checks, HirLowering, and HirEvaluator. Execution covers the finite numeric HIR slice; other results need a domain executor such as Nitrogen.Geometry's.";
-  source "https://github.com/TovarishN/Nitrogen/tree/2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  revision "2c7780681db0367d6e65dbb652c0a66f389c02ec";
-  runtime ".NET 10";
+  source "https://github.com/TovarishN/Nitrogen/tree/53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  revision "53b32f1fb10d0daf9ae3c297f0e78e2f373c2012";
+  runtime ".NET 10; packages Nitrogen.Runtime and Nitrogen.Generator 0.1.0";
   host "host operation bindings for execution only";
   validation locally-validated;
   provides LanguageWorkbench.ParseWithGrammar;
