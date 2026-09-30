@@ -9,6 +9,84 @@
       "requiredBy": [],
       "evidence": []
     },
+    "LanguageWorkbench.AdmitModule": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.ModuleAdmission"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "LanguageWorkbench.BindNames": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageCore"
+      ],
+      "requiredBy": [
+        "SemanticCatalog.CatalogTool"
+      ],
+      "evidence": []
+    },
+    "LanguageWorkbench.CheckSemantics": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageCore"
+      ],
+      "requiredBy": [
+        "Nitrogen.LanguageServer",
+        "SemanticCatalog.CatalogTool"
+      ],
+      "evidence": []
+    },
+    "LanguageWorkbench.ExecuteHostOperation": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageCore"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "LanguageWorkbench.LowerToTypedHir": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageCore"
+      ],
+      "requiredBy": [],
+      "evidence": []
+    },
+    "LanguageWorkbench.PackageEditorPlugins": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.PluginPackager"
+      ],
+      "requiredBy": [
+        "SemanticCatalog.EditorSupport"
+      ],
+      "evidence": [
+        "EV-20260930-catalogplugins"
+      ]
+    },
+    "LanguageWorkbench.ParseWithGrammar": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageCore"
+      ],
+      "requiredBy": [
+        "SemanticCatalog.CatalogTool"
+      ],
+      "evidence": []
+    },
+    "LanguageWorkbench.ServeLanguage": {
+      "concepts": [],
+      "realizations": [
+        "Nitrogen.LanguageServer"
+      ],
+      "requiredBy": [
+        "Nitrogen.PluginPackager",
+        "SemanticCatalog.EditorSupport"
+      ],
+      "evidence": []
+    },
     "SemanticCatalog.BuildCapabilityIndex": {
       "concepts": [],
       "realizations": [
@@ -31,7 +109,9 @@
         "SemanticCatalog.EditorSupport"
       ],
       "requiredBy": [],
-      "evidence": []
+      "evidence": [
+        "EV-20260930-catalogeditor"
+      ]
     },
     "SemanticCatalog.ValidateRecords": {
       "concepts": [],
@@ -39,7 +119,9 @@
         "SemanticCatalog.CatalogTool"
       ],
       "requiredBy": [],
-      "evidence": []
+      "evidence": [
+        "EV-20260930-catalogvalidator"
+      ]
     }
   }
 }

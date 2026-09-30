@@ -1,0 +1,6 @@
+capability LanguageWorkbench.AdmitModule
+{
+  name "Admit a language module";
+  definition "Compile a reviewed declarative .ngr package in isolation, compare its examples and expected diagnostics, match its requested operations to a host capability set, and admit it only when every check passes.";
+  contract (package: ModulePackage, capabilities: HostCapabilitySet) -> AdmittedModule effect host;
+}

@@ -1,0 +1,6 @@
+capability LanguageWorkbench.CheckSemantics
+{
+  name "Check semantics";
+  definition "Evaluate a grammar's declared properties and checks over a bound project and report source-located diagnostics.";
+  contract (project: BoundProject) -> Diagnostics effect pure;
+}

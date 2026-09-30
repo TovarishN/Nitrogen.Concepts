@@ -8,4 +8,6 @@ realization SemanticCatalog.EditorSupport composition
   host "an editor that runs a language server over stdio";
   validation locally-validated;
   provides SemanticCatalog.EditRecords;
+  relation requires LanguageWorkbench.PackageEditorPlugins "tools/editors/build.sh runs nitrogen package.";
+  relation requires LanguageWorkbench.ServeLanguage "Both plugins run nitrogen lsp --config on the bundled catalog language.";
 }
